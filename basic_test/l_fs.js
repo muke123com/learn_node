@@ -11,7 +11,9 @@ console.log(__dirname);
 //     if (err) throw err;
 //     console.log(data.toString());
 // });
+// fs.appendFileSync(__dirname + '/a.txt', 'abcccxvxc');
+// let data = fs.readFileSync(__dirname + '/a.txt', 'utf-8');
+// console.log(data);
+// fs.writeFileSync(__dirname + '/b.txt', data);
 
-let data = fs.readFileSync(__dirname + '/a.txt', 'utf-8');
-console.log(data);
-fs.writeFileSync(__dirname + '/b.txt', data);
+console.log(process.argv);

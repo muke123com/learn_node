@@ -1,11 +1,31 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <script crossorigin="anonymous" integrity="sha384-fJU6sGmyn07b+uD1nMk7/iSb4yvaowcueiQhfVgQuD98rfva8mcr1eSvjchfpMrH" src="https://lib.baomitu.com/jquery/3.3.1/jquery.js"></script>
+</head>
+<body>
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
-  </body>
+    <script>
+        //http://localhost:3000/jsonp?callback=getData
+        var script = document.createElement('script');
+        script.src = 'http://localhost:3000/learn/jsonp?callback=getData';
+        document.head.appendChild(script);
+
+        $.ajax({
+            url: "http://localhost:3000/learn/jsonp",
+            type: "GET",
+            dataType: "jsonp",  //指定服务器返回的数据类型
+            jsonpCallback: "getData",  //指定回调函数名称
+            success: function (data) {
+
+            }
+        });
+        function getData(a) {
+            console.log(a);
+        }
+    </script>
+</body>
 </html>
