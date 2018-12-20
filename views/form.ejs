@@ -7,7 +7,32 @@
 </head>
 <body>
     <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <ul>
+        <% for(var key in list){ %>
+        <li>
+            <img src="/uploads/<%= list[key]['filename'] %>" style="width: 100px">
+            <strong><%= list[key]['name'] %></strong>
+            <span><%= list[key]['age'] %></span>
+        </li>
+        <% } %>
+    </ul>
+    <form action="/learn/submit" method="post" enctype="multipart/form-data">
+        <ul>
+            <li>
+                <label>姓名</label>
+                <input type="text" name="name">
+            </li>
+            <li>
+                <label>年龄</label>
+                <input type="text" name="age">
+            </li>
+            <li>
+                <label>文件</label>
+                <input type="file" name="file">
+            </li>
+        </ul>
+        <button>提交</button>
+    </form>
     <script>
 
     </script>
