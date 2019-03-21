@@ -26,6 +26,8 @@
     "mysql": "^2.16.0"
   },
   "devDependencies": {
+    "axios": "^0.18.0",
+    "jsonwebtoken": "^8.5.1",
     "nodemon": "^1.8.1"
   }
 }

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>token</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <button type="button" id="btn">点击</button>
+    </div>
+    <script>
+        document.getElementById("btn").onclick = function () {
+            axios.get('/test?id=12345')
+                .then(function (response) {
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+
+    </script>
+</body>
+</html>
