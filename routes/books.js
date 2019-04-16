@@ -8,7 +8,7 @@ router.get('/list', async (ctx, next) => {
 })
 
 router.get('/initBooks', async (ctx, next) => {
-    booksModel.insertBooks();
+    booksModel.insertBooksFromFolder();
     ctx.body = 'books'
 })
 
@@ -24,5 +24,12 @@ router.get('/getBookContent/:name', async (ctx, next) => {
     content = content.toString();
     ctx.body = content
 })
+
+router.get('/test', async (ctx, next) => {
+    let encode = ctx.query.encode;
+    let data = await booksModel.getBookContentStream('《肖申克的救赎》.txt', encode);
+    ctx.body = data;
+})
+
 
 module.exports = router
