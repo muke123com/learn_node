@@ -22,7 +22,6 @@ db.q = function (sql, params) {
                 return;
             }
             connection.query(sql, params, function (error, results, fields) {
-                console.log(`${sql}=>${params}`);
                 connection.release();
                 if(error){
                     reject(error);

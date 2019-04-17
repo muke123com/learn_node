@@ -13,7 +13,9 @@ router.get('/initBooks', async (ctx, next) => {
 })
 
 router.get('/getBooks', async (ctx, next) => {
-    let key = ctx.query.key;
+    let key = escape(ctx.query.key);
+    key = key.replace(/%/g, '\\%');
+    console.log(key);
     let books = await booksModel.getBooks(key);
     ctx.body = books
 })

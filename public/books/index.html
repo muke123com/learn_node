@@ -15,7 +15,7 @@
             <input type="text" v-model="key" value="" placeholder="" @keyup.enter="getBookList">
         </div>
         <div class="list">
-            <a href="javascript:void(0)" v-for="item in bookList" :data-title="item['mtitle']" @click="getBookContentByTitle">{{ item['mtitle'] }}</a>
+            <a href="javascript:void(0)" v-for="item in bookList" :data-title="item['mtitle']" @click="getBookContentByTitle">{{ item['title'] }}</a>
         </div>
         <div class="fix-content" v-if="show">
             <div class="content" v-html="bookContent"></div>
@@ -48,7 +48,11 @@
                         url: '/books/getBooks'
                     }).then(res=>{
                         console.log(res);
-                        this.bookList = res.data;
+                        let bookList = res.data;
+                        bookList.map((item) => {
+                            item['title'] = unescape(item['mtitle']);
+                        })
+                        this.bookList = bookList;
                     })
                 },
                 getBookContentByTitle(e) {
@@ -61,7 +65,8 @@
                         url: '/books/getBookContentByTitle'
                     }).then(res=>{
                         console.log(res);
-                        let bookContent = res.data[0]['mcontent'];
+                        let bookContent = unescape(res.data[0]['mcontent']);
+                        // console.log(bookContent);
                         this.findKeyInBookContent(bookContent);
                         this.show = true;
                     })
@@ -71,7 +76,10 @@
                 },
                 findKeyInBookContent(bookContent){
                     let key = this.key;
-                    if(key == '') return;
+                    if(key == ''){
+                        this.bookContent = bookContent
+                        return
+                    };
                     this.bookContent = bookContent
                     .replace(/\n/g, '<br>')
                     .replace(new RegExp(key, 'g'), `<i>${key}</i>`)
