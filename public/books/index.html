@@ -12,30 +12,69 @@
 <body>
     <div class="container" id="books">
         <div class="search">
-            <input type="text" name="key" value="" placeholder="">
+            <input type="text" v-model="key" value="" placeholder="" @keyup.enter="getBookList">
         </div>
         <div class="list">
-            <a href="" v-for="item in bookList">{{ item }}</a>
+            <a href="javascript:void(0)" v-for="item in bookList" :data-title="item['mtitle']" @click="getBookContentByTitle">{{ item['mtitle'] }}</a>
+        </div>
+        <div class="fix-content" v-if="show">
+            <div class="content" v-html="bookContent"></div>
+            <button type="button" class="button" @click="closeBookContent">关闭</button>
         </div>
     </div>
     <script>
         let bookVue = new Vue({
             el: "#books",
             data: {
-                bookList: []
+                key: '',
+                bookList: [],
+                bookContent: '',
+                show: false
+            },
+            watch: {
+                
             },
             created() {
                 this.getBookList();
             },
             methods: {
                 getBookList() {
+                    let key = this.key;
                     axios({
                         method: 'get',
+                        params: {
+                            key, key
+                        },
                         url: '/books/getBooks'
                     }).then(res=>{
                         console.log(res);
                         this.bookList = res.data;
                     })
+                },
+                getBookContentByTitle(e) {
+                    let title = e.currentTarget.dataset.title;
+                    axios({
+                        method: 'get',
+                        params: {
+                            title: title
+                        },
+                        url: '/books/getBookContentByTitle'
+                    }).then(res=>{
+                        console.log(res);
+                        let bookContent = res.data[0]['mcontent'];
+                        this.findKeyInBookContent(bookContent);
+                        this.show = true;
+                    })
+                },
+                closeBookContent () {
+                    this.show = false;
+                },
+                findKeyInBookContent(bookContent){
+                    let key = this.key;
+                    if(key == '') return;
+                    this.bookContent = bookContent
+                    .replace(/\n/g, '<br>')
+                    .replace(new RegExp(key, 'g'), `<i>${key}</i>`)
                 }
             }
         })

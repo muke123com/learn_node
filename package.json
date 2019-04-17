@@ -27,7 +27,6 @@
   },
   "devDependencies": {
     "axios": "^0.18.0",
-    "iconv-lite": "^0.4.24",
     "jsonwebtoken": "^8.5.1",
     "nodemon": "^1.8.1"
   }
