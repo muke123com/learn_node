@@ -53,19 +53,7 @@ booksModel.insertBooksFromFolder = async () => {
             console.log(v_sql);
             throw error
         }
-        
-
-        // if(i == books.length - 1) {
-        //     values += value
-        // }else{
-        //     values += value + ','
-        // }
     }
-    // values = escape(values);
-    
-    // let sql = `insert into m_books (mtitle, mcontent) values ${values}`;
-    // let res = await db.q(sql, []);
-    // console.log(res);
 }
 
 // 获取图书内容
