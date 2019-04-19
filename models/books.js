@@ -2,13 +2,15 @@
 const fs = require('fs')
 const iconv = require('iconv-lite');
 
+const file = require('./file');
+
 let booksModel = {};
 const booksDirPath = './books/';
 let all = 0;
 let count = 0;
 
 booksModel.getBooks = async (key='') => {
-    let sql = `select mtitle from m_books where mcontent like '%${key}%' limit 100`;
+    let sql = `select mtitle, msize from m_books where mcontent like '%${key}%' limit 100`;
     console.log(sql);
     let books_list = await db.q(sql, []);
     return books_list;
@@ -37,14 +39,17 @@ booksModel.insertBooksFromFolder = async () => {
     
     for (let i = 0; i < books.length; i++) {
         let title = books[i];
+        if(file.isDir(booksDirPath + title)) continue;
         let content = await booksModel.getBookContentStream(title);
+        let fstat = fs.statSync(booksDirPath + title);
+        let size = parseInt(fstat.size);
 
         title = escape(books[i]);
         content = escape(content);
 
-        let value = `('${title}', '${content}')`;
+        let value = `('${title}', '${content}', '${size}')`;
 
-        v_sql = `insert into m_books (mtitle, mcontent) values ${value}`;
+        v_sql = `insert into m_books (mtitle, mcontent, msize) values ${value}`;
         try {
             let res = await db.q(v_sql, []);
             count++;

@@ -15,7 +15,10 @@
             <input type="text" v-model="key" value="" placeholder="" @keyup.enter="getBookList">
         </div>
         <div class="list">
-            <a href="javascript:void(0)" v-for="item in bookList" :data-title="item['mtitle']" @click="getBookContentByTitle">{{ item['title'] }}</a>
+            <a href="javascript:void(0)" v-for="item in bookList" :data-title="item['mtitle']" @click="getBookContentByTitle">
+                <h6>{{ item['title'] }} </h6>
+                {{item['size']/1000}}k
+            </a>
         </div>
         <div class="fix-content" v-if="show">
             <div class="content" v-html="bookContent"></div>
@@ -51,6 +54,7 @@
                         let bookList = res.data;
                         bookList.map((item) => {
                             item['title'] = unescape(item['mtitle']);
+                            item['size'] = parseInt(item['msize']);
                         })
                         this.bookList = bookList;
                     })
