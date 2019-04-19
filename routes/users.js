@@ -1,14 +1,24 @@
 const router = require('koa-router')();
 const usersModel = require('../models/users');
+const Jwt = require('../models/jwt');
+const showAjax = require('../models/showAjax');
 
 router.prefix('/users');
 
-router.get('/login', async (ctx, next) => {
-    let users = await usersModel.getUsers();
-    console.log(users);
-    await ctx.render('users/login', {
-        title: '登录'
-    })
+
+
+
+router.post('/login', async (ctx, next) => {
+    let username = ctx.request.body.username;
+    let password = ctx.request.body.password;
+    let res = await usersModel.findOne(username, password);
+
+    ctx.body = res;
+
+})
+
+router.get('/getUserInfo', async (ctx, next) => {
+    ctx.body = showAjax(1, '用户已登录')
 });
 router.get('/register', async (ctx, next) => {
     await ctx.render('users/register', {

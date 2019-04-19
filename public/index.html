@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../css/common.css">
+    <script src="../js/vue.min.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/axios.min.js"></script>
+    <title>登录</title>
+</head>
+<body>
+    <div class="container" id="index">
+        {{username}}
+    </div>
+    <script>
+        axios.defaults.headers.common['token'] = localStorage.getItem('token');
+        let indexVue = new Vue({
+            el: '#index',
+            data: {
+                username: ''
+            },
+            created() {
+                this.getUser();
+            },
+            methods: {
+                getUser: function() {
+                    axios({
+                        method: 'get',
+                        url: '/users/getUserInfo'
+                    }).then(res=>{
+                        console.log(res);
+                        res = res.data;
+                        if(res.status == 403){
+                            common.goLogin(location.href);
+                        }
+                        
+                        this.username = localStorage.getItem('username');
+                        
+                    })
+                }
+            },
+        })
+    </script>
+</body>
+</html>

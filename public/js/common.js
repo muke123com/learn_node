@@ -12,3 +12,10 @@
 		document.write('<meta name="viewport" content="width=' + designWidth + ',user-scalable=no,target-densitydpi=device-dpi,minimal-ui,viewport-fit=cover">');
 	}
 }(375);
+
+let common = {
+	goLogin(callback) {
+		localStorage.setItem("callback", callback);
+		location.href = '/account/login.html'
+	}
+}

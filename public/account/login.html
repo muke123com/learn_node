@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../css/common.css">
+    <script src="../js/vue.min.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/axios.min.js"></script>
+    <title>登录</title>
+</head>
+<body>
+    <div class="container" id="users">
+        <ul>
+            <li>
+                <input type="text" v-model="username" />
+            </li>
+            <li>
+                <input type="password" v-model="password" />
+            </li>
+            <li>
+                <button type="button" @click="login">提 交</button>
+            </li>
+        </ul>
+    </div>
+    <script>
+        axios.defaults.headers.common['token'] = localStorage.getItem('token');
+        let usersVue = new Vue({
+            el: '#users',
+            data: {
+                username: '',
+                password: ''
+            },
+            methods: {
+                login: function(){
+                    let username = this.username;
+                    let password = this.password;
+                    
+                    
+                    axios({
+                        method: 'post',
+                        data: {
+                            username: username,
+                            password: password
+                        },
+                        url: '/users/login'
+                    }).then(res=>{
+                        res = res.data;
+                        localStorage.setItem('username', res.data.username);
+                        localStorage.setItem('token', res.data.token);
+
+                        let callback = localStorage.getItem("callback");
+                        location.href = callback;
+                    })
+                }
+            },
+        })
+    </script>
+</body>
+</html>
