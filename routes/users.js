@@ -5,16 +5,12 @@ const showAjax = require('../models/showAjax');
 
 router.prefix('/users');
 
-
-
-
 router.post('/login', async (ctx, next) => {
     let username = ctx.request.body.username;
     let password = ctx.request.body.password;
     let res = await usersModel.findOne(username, password);
 
     ctx.body = res;
-
 })
 
 router.get('/getUserInfo', async (ctx, next) => {
@@ -24,10 +20,6 @@ router.get('/register', async (ctx, next) => {
     await ctx.render('users/register', {
         title: '注册'
     })
-});
-
-router.post('/login', async (ctx, next) => {
-    ctx.body = 'koa2 string'
 });
 
 module.exports = router;
