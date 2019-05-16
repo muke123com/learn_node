@@ -46,8 +46,8 @@
                 },
                 getData() {
                     axios({
-                        method: 'get',
-                        url: '/getData'
+                        method: 'post',
+                        url: '/index/getData'
                     }).then(res=>{
                         console.log(res);
                         
