@@ -8,8 +8,8 @@ let spiderModel = {};
 let table = 'm_';
 
 spiderModel.getData = async () => {
-    // let url = "https://graphql.epicgames.com/graphql";
-    let url = "http://localhost:3000/test";
+    let url = "https://graphql.epicgames.com/graphql";
+    // let url = "http://localhost:3000/test";
     let query = "";
     let data = {};
     data['query'] = query;
@@ -18,8 +18,17 @@ spiderModel.getData = async () => {
     let options = {
         url: url,
         headers: {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36',
-            'Host': "graphql.epicgames.com",
+            'cache-control': 'no-cache',
+            Connection: 'keep-alive',
+            'content-length': '1531',
+            'accept-encoding': 'gzip, deflate',
+            cookie: 'EPIC_SESSION_GRAPHQL=z82cV2PBOZNFXsOGzWTKjg.4GPyiT_EI9FsN55j6L2h6KHMNtgtKHBPRhEKBF-heSIrERA8zM2Zxycg8GUFiOfu.1558001546284.86400000.J6HGciVMr_nRxMGmZOqyWeK7d_jr1smBFpPyEJOB6OI',
+            Host: 'graphql.epicgames.com',
+            'Postman-Token': 'e7e7eb75-0fef-4a28-8d3b-235c67370432,31ea3a81-d997-4439-8172-30b6b27a6375',
+            'Cache-Control': 'no-cache',
+            Accept: '*/*',
+            'User-Agent': 'PostmanRuntime/7.11.0',
+            'Content-Type': 'application/json'
         },
         form: data
     };

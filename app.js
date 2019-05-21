@@ -37,21 +37,21 @@ app.use(async (ctx, next) => {
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
 
-app.use(async (ctx, next) => {
-  if(ctx.url != '/users/login'){
-      let token = ctx.headers.token;
-      let jwt = new Jwt(token);
-      let result = jwt.verifyToken(token);
+// app.use(async (ctx, next) => {
+//   if(ctx.url != '/users/login'){
+//       let token = ctx.headers.token;
+//       let jwt = new Jwt(token);
+//       let result = jwt.verifyToken(token);
 
-      if(result == 'err'){
-          ctx.body = {status: 403, msg: '登录已过期，请重新登录'}
-      }else {
-          await next();
-      }
-  }else {
-      await next();
-  }
-})
+//       if(result == 'err'){
+//           ctx.body = {status: 403, msg: '登录已过期，请重新登录'}
+//       }else {
+//           await next();
+//       }
+//   }else {
+//       await next();
+//   }
+// })
 // routes
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())

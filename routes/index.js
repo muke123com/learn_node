@@ -15,14 +15,5 @@ router.post('/getData', async (ctx, next) => {
   ctx.body = data;
 })
 
-router.post('/test', async (ctx, next) => {
-    ctx.body = ctx.request.body;
-})
-
-router.get('/json', async (ctx, next) => {
-  ctx.body = {
-    title: 'koa2 json'
-  }
-})
 
 module.exports = router
