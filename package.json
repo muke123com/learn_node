@@ -29,6 +29,7 @@
     "axios": "^0.18.0",
     "jsonwebtoken": "^8.5.1",
     "nodemon": "^1.8.1",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "video.js": "^7.5.4"
   }
 }
