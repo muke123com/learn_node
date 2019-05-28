@@ -12,7 +12,6 @@ import { logger } from './logging';
 import { config } from './config';
 
 import "reflect-metadata";
-import {User} from "./entity/User";
 
 createConnection().then(async connection => {
     console.log("Here you can setup and run express/koa/any other framework.");
