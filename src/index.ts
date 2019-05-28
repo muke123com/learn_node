@@ -36,7 +36,6 @@ createConnection().then(async connection => {
 
     // this routes are protected by the JWT middleware, also include middleware to respond with "Method Not Allowed - 405".
     app.use(router.routes()).use(router.allowedMethods());
-    const port = 3001
     app.listen(config.port);
 
     console.log(`Server running on port ${config.port}`);
