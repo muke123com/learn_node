@@ -7,5 +7,6 @@ router.get('/index', async (ctx, next) => {
 })
 
 router.get('/product/games', ProductController.getGames)
+router.get('/product/getGamesBySteam', ProductController.getGamesBySteam)
 
 export { router };

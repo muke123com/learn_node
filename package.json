@@ -1,30 +1,32 @@
 {
-   "name": "learn_typeorm",
-   "version": "0.0.1",
-   "description": "Awesome project developed with TypeORM.",
-   "devDependencies": {
-      "ts-node": "3.3.0",
-      "@types/node": "^8.0.29",
-      "typescript": "3.3.3333"
-   },
-   "dependencies": {
-      "@koa/cors": "^2.2.1",
-      "class-validator": "^0.9.1",
-      "dotenv": "^6.0.0",
-      "koa": "^2.5.1",
-      "koa-bodyparser": "^4.2.1",
-      "koa-helmet": "^4.0.0",
-      "koa-jwt": "^3.3.2",
-      "koa-router": "^7.4.0",
-      "pg": "^7.4.3",
-      "pg-connection-string": "^2.0.0",
-      "reflect-metadata": "^0.1.12",
-      "typeorm": "^0.2.6",
-      "winston": "^3.0.0",
-      "mysql": "^2.16.0"
-   },
-   "scripts": {
-      "start": "ts-node src/index.ts",
-      "server": "node build/index.js"
-   }
+  "name": "learn_typeorm",
+  "version": "0.0.1",
+  "description": "Awesome project developed with TypeORM.",
+  "devDependencies": {
+    "ts-node": "3.3.0",
+    "@types/node": "^8.0.29",
+    "typescript": "3.3.3333"
+  },
+  "dependencies": {
+    "@koa/cors": "^2.2.1",
+    "cheerio": "^1.0.0-rc.3",
+    "class-validator": "^0.9.1",
+    "dotenv": "^6.0.0",
+    "koa": "^2.5.1",
+    "koa-bodyparser": "^4.2.1",
+    "koa-helmet": "^4.0.0",
+    "koa-jwt": "^3.3.2",
+    "koa-router": "^7.4.0",
+    "mysql": "^2.16.0",
+    "pg": "^7.4.3",
+    "pg-connection-string": "^2.0.0",
+    "reflect-metadata": "^0.1.12",
+    "request": "^2.88.0",
+    "typeorm": "^0.2.6",
+    "winston": "^3.0.0"
+  },
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "server": "node build/index.js"
+  }
 }
