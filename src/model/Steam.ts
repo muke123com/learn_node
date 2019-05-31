@@ -1,11 +1,14 @@
 import * as request from 'request';
 import * as cheerio from 'cheerio';
+import { getManager, Repository, Not, Equal } from 'typeorm';
+import { Steam } from '../entity/Steam';
 
 export class SteamModel {
     readonly table = 'm_steam'
-    static async getDataFromSteam() {
+    static async getDataFromSteam(page) {
         return new Promise((resolve, reject) => {
             let url = 'https://store.steampowered.com/search/';
+            // let url = 'https://www.baidu.com/';
 
             let options = {
                 method: 'GET',
@@ -23,31 +26,31 @@ export class SteamModel {
                 if (error) {
                     reject(error)
                 }
+                const steamRepository: Repository<Steam> = getManager().getRepository(Steam);
                 const $ = cheerio.load(body);
                 let row = $(".search_result_row");
-                let dataList = [];
-                row.each((i) => {
-                    let name = row.eq(i).find(".title").text();
-                    let image = row.eq(i).find("img").attr("src");
-                    let href = row.eq(i).attr("href");
-                    let game_id = row.eq(i).attr("data-ds-appid");
-                    let discount = row.eq(i).find(".search_discount span").text();
-                    let price = row.eq(i).find("strike").text();
-                    let new_price = row.eq(i).find(".search_price_discount_combined").attr("data-price-final");
+                let dataList: Steam[] = [];
+                row.each(async (i) => {
+                    let s = new Steam();
+                    s.name = row.eq(i).find(".title").text();
+                    s.image = row.eq(i).find("img").attr("src");
+                    s.href = row.eq(i).attr("href");
+                    s.gameId = row.eq(i).attr("data-ds-appid");
+                    s.discount = row.eq(i).find(".search_discount span").text();
+                    s.price = row.eq(i).find("strike").text();
+                    s.newPrice = row.eq(i).find(".search_price_discount_combined").attr("data-price-final");
+                    s.age = 0;
+                    
+                    // const game = await steamRepository.find({name: s.name});
+                    // if(game.length == 0) {
+                    //     steamRepository.save(s);
+                    // }else {
+                    //     await steamRepository.update(s, {name: s.name});
+                    // }
 
-                    let data = {
-                        name,
-                        image,
-                        href,
-                        game_id,
-                        discount,
-                        price,
-                        new_price
-                    };
-
-                    dataList.push(data);
+                    steamRepository.update(s, {name: s.name});
                 })
-                resolve(dataList);
+                resolve(page + '抓取成功');
             });
         })
     }

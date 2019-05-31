@@ -23,10 +23,12 @@
     "reflect-metadata": "^0.1.12",
     "request": "^2.88.0",
     "typeorm": "^0.2.6",
-    "winston": "^3.0.0"
+    "winston": "^3.0.0",
+    "ws": "^7.0.0"
   },
   "scripts": {
     "start": "ts-node src/index.ts",
+    "ws": "ts-node src/scripts/ws.ts",
     "server": "node build/index.js"
   }
 }
