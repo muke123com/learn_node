@@ -59,3 +59,5 @@ function push(array: any[], ...items: any[]) {
         array.push(item)
     })
 }
+
+//泛型
