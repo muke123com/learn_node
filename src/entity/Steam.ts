@@ -27,7 +27,7 @@ export class Steam {
     @Column({name: 'new_price'})
     newPrice: string;
 
-    @Column()
-    age: number;
+    // @Column()
+    // age: number;
 
 }

@@ -11,6 +11,7 @@ export default class ProductController {
         const steamRepository: Repository<Steam> = getManager().getRepository(Steam);
 
         const games: Steam[] = await steamRepository.find();
+        const sql = await steamRepository.query(`show create table m_steam`)
 
         ctx.status = 200;
         ctx.body = games;
