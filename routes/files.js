@@ -2,6 +2,7 @@ const router = require('koa-router')();
 const fs = require('fs');
 
 const Jsons = require('../models/jsons');
+const FilesModel = require('../models/file');
 
 router.prefix('/files');
 
@@ -39,5 +40,12 @@ router.get('/json', async (ctx, next) => {
         title: 'koa2 json'
     }
 });
+
+router.get('/img/:name', async (ctx, next) => {
+    let name = ctx.params.name;
+    
+    ctx.body = FilesModel.getImgByName(name);
+    
+})
 
 module.exports = router

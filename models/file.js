@@ -21,4 +21,9 @@ file.uploadBanner = function(file) {
     return name;
 }
 
+file.getImgByName = function(name) {
+    console.log(name);
+    return fs.readFileSync(uploadPath + name, 'binary');
+}
+
 module.exports = file;

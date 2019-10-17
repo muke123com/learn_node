@@ -19,8 +19,8 @@
                 <li>
                     <input type="file" name="file" id="" @change="uploadFile">
                 </li>
-                <li>
-
+                <li>    
+                    <img :src="imgPath" />
                 </li>
             </ul>
         </form>
@@ -30,10 +30,12 @@
         var filesVue = new Vue({
             el: "#filesBox",
             data: {
-                fileName: ''
+                fileName: '',
+                imgPath: ''
             },
             methods: {
                 uploadFile(e) {
+                    let _this = this;
                     let param = new FormData();
                     let file = e.target.files;
                     param.append("file", file[0])
@@ -51,6 +53,7 @@
                         }
                     }).then(res => {
                         console.log(res);
+                        _this.imgPath = res.data;
                     })
                 }
             },
