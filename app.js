@@ -5,13 +5,9 @@ const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
+const glob = require('glob')
 
 const Jwt = require('./models/jwt')
-
-const index = require('./routes/index')
-const api = require('./routes/api')
-const files = require('./routes/files')
-const books = require('./routes/books')
 
 // error handler
 onerror(app)
@@ -53,10 +49,12 @@ app.use(async (ctx, next) => {
 //   }
 // })
 // routes
-app.use(index.routes(), index.allowedMethods())
-app.use(api.routes(), api.allowedMethods())
-// app.use(files.routes(), files.allowedMethods())
-// app.use(books.routes(), books.allowedMethods())
+glob('routes/*.js', (err, files) => {
+  files.map(item => {
+    const r = require(`./${item}`)
+    app.use(r.routes(), r.allowedMethods())
+  })
+})
 
 // error-handling
 app.on('error', (err, ctx) => {

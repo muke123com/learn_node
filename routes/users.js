@@ -6,6 +6,7 @@ const showAjax = require('../models/showAjax');
 router.prefix('/users');
 
 router.post('/login', async (ctx, next) => {
+    console.log('/login/');
     let username = ctx.request.body.username;
     let password = ctx.request.body.password;
     let res = await usersModel.findOne(username, password);

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../css/common.css">
+    <script src="../js/vue.min.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/axios.min.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container" id="filesBox">
+        <form action="/files/uploadFile" method="post" enctype="multipart/form-data">
+            <ul>
+                <li>
+                    <input type="file" name="file" id="" @change="uploadFile">
+                </li>
+                <li>    
+                    <img :src="imgPath" />
+                </li>
+            </ul>
+        </form>
+    </div>
+    <script>
+        axios.defaults.headers.common['token'] = localStorage.getItem('token');
+        var filesVue = new Vue({
+            el: "#filesBox",
+            data: {
+                fileName: '',
+                imgPath: ''
+            },
+            methods: {
+                uploadFile(e) {
+                    let _this = this;
+                    let param = new FormData();
+                    let file = e.target.files;
+                    param.append("file", file[0])
+                    axios({
+                        method: 'post',
+                        data: param,
+                        headers: {
+                            "Content-Type": "multipart/form-data"
+                        },
+                        url: '/upload/',
+                        //添加上传进度监听事件 
+                        onUploadProgress: e => {
+                            var completeProgress = ((e.loaded / e.total * 100) | 0) + "%";
+                            console.log(completeProgress)
+                        }
+                    }).then(res => {
+                        console.log(res);
+                        _this.imgPath = res.data;
+                    })
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>
