@@ -10,7 +10,10 @@ file.isDir = function(filePath) {
 file.isFile = function(filePath) {
     return fs.statSync(filePath).isFile();
 }
-
+/**
+ * 上传图片
+ * @file 文件数据
+ */
 file.uploadBanner = function(file) {
     const reader = fs.createReadStream(file.path);
     const fileType = file.name.split(".").pop();
@@ -21,9 +24,21 @@ file.uploadBanner = function(file) {
     return name;
 }
 
+/**
+ * 根据图片名字获取图片
+ * @name 图片名
+ */
 file.getImgByName = function(name) {
     console.log(name);
-    return fs.readFileSync(uploadPath + name, 'binary');
+    return fs.createReadStream(uploadPath + name);
+}
+
+/**
+ * 获取所有上传的图片
+ * 
+ */
+file.getUploadImgs = function() {
+    return fs.readdirSync(uploadPath);
 }
 
 module.exports = file;

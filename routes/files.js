@@ -83,7 +83,11 @@ router.get('/video', async (ctx, next) => {
 
 router.get('/img/:name', async (ctx, next) => {
     let name = ctx.params.name;
-    
+    let head = {
+        'Content-Type': 'image/jpeg',
+    };
+    ctx.set(head)
+    ctx.status = 200;
     ctx.body = FilesModel.getImgByName(name);
     
 })

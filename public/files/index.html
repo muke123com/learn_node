@@ -10,6 +10,20 @@
     <script src="../js/common.js"></script>
     <script src="../js/axios.min.js"></script>
     <title>Document</title>
+    <style>
+        .img-list div {
+            display: inline-block;
+            margin: 15px;
+            width: 100px;
+            height: 100px;
+            overflow: hidden;
+            text-align: center;
+        }
+        .img-list div img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    </style>
 </head>
 
 <body>
@@ -19,8 +33,10 @@
                 <li>
                     <input type="file" name="file" id="" @change="uploadFile">
                 </li>
-                <li>    
-                    <img :src="imgPath" />
+                <li class="img-list">    
+                    <div v-for="item in imgList">
+                        <img :src="'/files/img/' + item" />
+                    </div>
                 </li>
             </ul>
         </form>
@@ -31,7 +47,10 @@
             el: "#filesBox",
             data: {
                 fileName: '',
-                imgPath: ''
+                imgList: []
+            },
+            created() {
+                this.getImgList();
             },
             methods: {
                 uploadFile(e) {
@@ -52,8 +71,18 @@
                             console.log(completeProgress)
                         }
                     }).then(res => {
-                        console.log(res);
-                        _this.imgPath = res.data;
+                        _this.getImgList()
+                    })
+                },
+                getImgList() {
+                    let _this = this;
+                    axios({
+                        method: 'get',
+                        url: '/upload/getUploadImgs',
+                        //添加上传进度监听事件 
+                    }).then(res => {
+                        res = res.data;
+                        _this.imgList = res.data;
                     })
                 }
             },
