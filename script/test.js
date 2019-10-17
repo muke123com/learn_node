@@ -1,3 +1,5 @@
-let values = '#k--';
-values = escape(values);
-console.log(values);
+const glob = require('glob')
+
+glob('routes/*.js', (err, files) => {
+  console.log(files);
+})

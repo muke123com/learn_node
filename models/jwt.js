@@ -14,7 +14,7 @@ class Jwt {
         let cert = fs.readFileSync(path.join(__dirname, '../privkey.pem'));
         let token = jwt.sign({
             data,
-            exp: created + 60 * 1,
+            exp: created + 60 * 1000,
         }, cert, { algorithm: 'RS256'});
         return token;
     }

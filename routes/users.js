@@ -9,6 +9,7 @@ router.prefix('/users');
 
 
 router.post('/login', async (ctx, next) => {
+    console.log('/login/');
     let username = ctx.request.body.username;
     let password = ctx.request.body.password;
     let res = await usersModel.findOne(username, password);
@@ -24,10 +25,6 @@ router.get('/register', async (ctx, next) => {
     await ctx.render('users/register', {
         title: '注册'
     })
-});
-
-router.post('/login', async (ctx, next) => {
-    ctx.body = 'koa2 string'
 });
 
 module.exports = router;
