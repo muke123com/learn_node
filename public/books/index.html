@@ -23,16 +23,20 @@
         </div>
     </div>
     <script>
+        
         let bookVue = new Vue({
             el: "#books",
             data: {
                 key: '',
                 bookList: [],
                 bookContent: '',
-                show: false
+                show: false,
+                data: {}
             },
             watch: {
-                
+                key() {
+                    console.log(111);
+                }
             },
             created() {
                 this.getBookList();
@@ -47,7 +51,7 @@
                         },
                         url: '/books/getBooks'
                     }).then(res=>{
-                        console.log(res);
+                        // console.log(res);
                         let bookList = res.data;
                         bookList.map((item) => {
                             item['title'] = unescape(item['mtitle']);
@@ -57,6 +61,15 @@
                 },
                 getBookContentByTitle(e) {
                     let title = e.currentTarget.dataset.title;
+                    let d = localStorage.getItem('data');
+                    if(d != null){
+                        this.data = JSON.parse(d);
+                    }
+                    if(this.data[title]) {
+                        this.bookContent = this.data[title];
+                        this.show = true;
+                        return;
+                    }
                     axios({
                         method: 'get',
                         params: {
@@ -64,25 +77,34 @@
                         },
                         url: '/books/getBookContentByTitle'
                     }).then(res=>{
-                        console.log(res);
+                        // console.log(res);
                         let bookContent = unescape(res.data[0]['mcontent']);
                         // console.log(bookContent);
-                        this.findKeyInBookContent(bookContent);
+                        this.findKeyInBookContent(title, bookContent);
                         this.show = true;
+                        
                     })
                 },
                 closeBookContent () {
                     this.show = false;
                 },
-                findKeyInBookContent(bookContent){
+                findKeyInBookContent(title, bookContent){
                     let key = this.key;
                     if(key == ''){
                         this.bookContent = bookContent
+                        this.setCache(title);
                         return
                     };
                     this.bookContent = bookContent
                     .replace(/\n/g, '<br>')
                     .replace(new RegExp(key, 'g'), `<i>${key}</i>`)
+                    this.setCache(title);
+                    // this.data[title] = this.bookContent;
+                },
+                setCache(title) {
+                    this.data[title] = this.bookContent;
+                    let d = JSON.stringify(this.data);
+                    localStorage.setItem('data', d);
                 }
             }
         })

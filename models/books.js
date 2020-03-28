@@ -8,7 +8,7 @@ let all = 0;
 let count = 0;
 
 booksModel.getBooks = async (key='') => {
-    let sql = `select mtitle from m_books where mcontent like '%${key}%' limit 100`;
+    let sql = `select mtitle from m_books where mcontent like '%${key}%' limit 1000`;
     console.log(sql);
     let books_list = await db.q(sql, []);
     return books_list;
